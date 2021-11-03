@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pl">
+    <head>
+        <meta charset="UTF-8">
+        <title>Menadżer haseł</title>
+
+        <script>
+            // login: milo
+            // hasło: milo123!
+
+            function zaloguj()
+            {
+                let login = form1.logintext.value;
+                let password = form1.passwordtext.value;
+
+                console.log(`Login: ${login}`);
+                console.log(`Hasło: ${password}`);
+
+                if(login == 'milo' && password == 'milo123!') {
+                    alert("Zalogowałeś(aś) się jako administrator.");                    
+                    document.location.href = "panel.html";
+                } else {
+                    alert("Wprowadzono nieprawidłowe hasło.");
+                }
+            }
+        </script>
+    </head>
+
+    <body>
+        <div class="panel">
+            <h2>Panel logowania:</h2>
+
+            <form name="form1" onSubmit="return false;">
+                <fieldset>
+                    <legend>Logowanie</legend>
+
+                    <input type="text" name="logintext" placeholder="Login">
+                    <input type="password" name="passwordtext" placeholder="Hasło">
+
+                    <button class="confirmButton" onClick="zaloguj()">Zaloguj</button>
+                    </fieldset>
+            </form>
+        </div>
+    </body>
+</html>

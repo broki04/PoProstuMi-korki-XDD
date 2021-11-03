@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pl">
+    <head>
+        <meta charset="UTF-8">
+        <title>Menadżer haseł</title>
+    
+        <script>
+            function init()
+            {
+                let taskList = JSON.parse(window.localStorage.getItem('taskList'));
+                if(taskList == null) {
+                    taskList = Array();
+                    window.localStorage.setItem('taskList', JSON.stringify(taskList));
+                }
+
+                showTasks();
+            }
+
+            function addTask()
+            {
+                let name = document.getElementById("userName").value;
+                let password = document.getElementById("passwordName").value;
+
+                let task = JSON.parse(window.localStorage.getItem("taskList"));
+                task.push(name);
+                task.push(password);
+
+                window.localStorage.setItem('taskList', JSON.stringify(task));
+                document.getElementById('userName').value = "";
+                document.getElementById('passwordName').value = "";
+
+                showTasks();
+            }
+
+            function showTasks()
+            {
+                let taskDiv = document.getElementById('taskList');
+                let taskArray = JSON.parse(window.localStorage.getItem('taskList'));
+                
+                let buffer = "";
+                buffer += "<ul>";
+
+                for(let i = 0; i < taskArray.length; i++) {
+                    buffer += `<li>`;
+                    buffer += `${taskArray[i]}`;
+                    buffer += `<button onClick="removeTask(${i})>Usuń</button>`;
+                    buffer += `</li>`;
+                }
+                buffer += "</ul>";
+
+                taskDiv.innerHTML = buffer;
+            }
+
+            function removeTask(i)
+            {
+                let taskArray = JSON.parse(window.localStorage.getItem("taskList"));
+                taskArray.splice(i, 1);
+
+                window.localStorage.setItem('taskList', JSON.stringify(taskArray));
+                showTasks();
+            }
+        </script>
+    </head>
+
+    <body onLoad="init()">
+        <center>
+            <h1>Wybierz użytkownika, któremu chcesz zmienić hasło:</h1>
+
+            <div id="taskList"></div>
+            
+            <input type="text" id="userName" placeholder="Nazwa użytkownika"><br>
+            <input type="password" id="passwordName" placeholder="Hasło"><br><br>
+            <button onClick="addTask()">Wprowadź użytkownika do bazy</button>
+        </center>
+    </body>
+</html>

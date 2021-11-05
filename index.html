@@ -5,40 +5,42 @@
         <title>Menadżer haseł</title>
 
         <script>
-            // login: milo
-            // hasło: milo123!
+            let loginArray = new Map([
+                ['root', 'root'],
+                ['admin', 'admin']
+            ]);
 
-            function zaloguj()
+            function loginIn()
             {
-                let login = form1.logintext.value;
-                let password = form1.passwordtext.value;
+                const login = form1.loginMemory;
+                const password = form1.passwordMemory;
 
-                console.log(`Login: ${login}`);
-                console.log(`Hasło: ${password}`);
+                console.log(`Login: ${login.value}`);
+                console.log(`Hasło: ${password.value}`);
 
-                if(login == 'milo' && password == 'milo123!') {
-                    alert("Zalogowałeś(aś) się jako administrator.");                    
-                    document.location.href = "panel.html";
-                } else {
+                if(!loginArray.has(login.value) || loginArray.get(login.value) != password.value) {
                     alert("Wprowadzono nieprawidłowe hasło.");
+                } else {
+                    alert("Najlepsza strona to: http://pornhub.com (NNN JEST KURWA)");
+                    document.location.href = "panel.html";
                 }
             }
         </script>
     </head>
 
     <body>
-        <div class="panel">
+        <div id="panel">
             <h2>Panel logowania:</h2>
 
-            <form name="form1" onSubmit="return false;">
+            <form id="form1" onSubmit="return false;">
                 <fieldset>
                     <legend>Logowanie</legend>
 
-                    <input type="text" name="logintext" placeholder="Login">
-                    <input type="password" name="passwordtext" placeholder="Hasło">
+                    <input type="text" id="loginMemory" placeholder="Login">
+                    <input type="password" id="passwordMemory" placeholder="Hasło">
 
-                    <button class="confirmButton" onClick="zaloguj()">Zaloguj</button>
-                    </fieldset>
+                    <button id="submit-button" onClick="loginIn()">Zaloguj</button>
+                </fieldset>
             </form>
         </div>
     </body>

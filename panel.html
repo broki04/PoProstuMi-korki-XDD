@@ -2,7 +2,17 @@
 <html lang="pl">
     <head>
         <meta charset="UTF-8">
-        <title>Menadżer haseł</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+
+    <body onLoad="init()">
+        <h1>Dostępne hasła: </h1>
+        <div id="taskList"></div>
+
+        <h2>Dodaj nowe hasła: </h2>
+        <input type="text" id="task">
+        <button onClick="addTask()">Dodaj hasło</button>
     
         <script>
             function init()
@@ -10,67 +20,74 @@
                 let taskList = JSON.parse(window.localStorage.getItem('taskList'));
                 if(taskList == null) {
                     taskList = Array();
-                    window.localStorage.setItem('taskList', JSON.stringify(taskList));
+                    window.localStorage.setItem('taskList', JSON.stringify(taskArray));
                 }
 
-                showTasks();
+                showTaskList();
             }
 
             function addTask()
             {
-                let name = document.getElementById("userName").value;
-                let password = document.getElementById("passwordName").value;
+                let task = document.getElementById('task').value;
+                if(task.length < 3 || task.length > 20) {
+                    alert("Wprowadzono zbyt długie/krótkie hasło. Limit znaków: 3-20");
+                    return ;
+                }
 
-                let task = JSON.parse(window.localStorage.getItem("taskList"));
-                task.push(name);
-                task.push(password);
-
-                window.localStorage.setItem('taskList', JSON.stringify(task));
-                document.getElementById('userName').value = "";
-                document.getElementById('passwordName').value = "";
-
-                showTasks();
+                let taskList = JSON.parse(window.localStorage.getItem('taskList'));
+                try {
+                    taskList.push(task);
+                } catch {
+                    taskList = Array();
+                    taskList.push(task);
+                }
+            
+                window.localStorage.setItem('taskList', JSON.stringify(taskList));
+                document.getElementById('task').value = "";
+                showTaskList();
             }
 
-            function showTasks()
+            function showTaskList()
             {
-                let taskDiv = document.getElementById('taskList');
                 let taskArray = JSON.parse(window.localStorage.getItem('taskList'));
-                
+                if(taskArray == null) return ;
+
                 let buffer = "";
                 buffer += "<ul>";
-
+                
                 for(let i = 0; i < taskArray.length; i++) {
-                    buffer += `<li>`;
-                    buffer += `${taskArray[i]}`;
-                    buffer += `<button onClick="removeTask(${i})>Usuń</button>`;
-                    buffer += `</li>`;
+                    buffer += "<li>";
+                    buffer += `${taskArray[i]} `;
+                    buffer += `<button onClick="modifyTask(${i})">Zmień</button>`;
+                    buffer += `<button onClick="removeTask(${i})">Usuń</button>`;
+                    buffer += "</li>";
                 }
-                buffer += "</ul>";
 
-                taskDiv.innerHTML = buffer;
+                buffer += "</ul>";
+                document.getElementById('taskList').innerHTML = buffer;
+            }
+
+            function modifyTask(i)
+            {
+                let password = prompt("Podaj nowe hasło: ");
+                if(task.length < 3 || task.length > 20) {
+                    alert("Wprowadzono zbyt długie/krótkie hasło. Limit znaków: 3-20");
+                    return;
+                }
+
+                alert("to do");
+
+                showTaskList();
             }
 
             function removeTask(i)
             {
-                let taskArray = JSON.parse(window.localStorage.getItem("taskList"));
+                let taskArray = JSON.parse(window.localStorage.getItem('taskList'));
                 taskArray.splice(i, 1);
 
                 window.localStorage.setItem('taskList', JSON.stringify(taskArray));
-                showTasks();
+                showTaskList();
             }
-        </script>
-    </head>
-
-    <body onLoad="init()">
-        <center>
-            <h1>Wybierz użytkownika, któremu chcesz zmienić hasło:</h1>
-
-            <div id="taskList"></div>
-            
-            <input type="text" id="userName" placeholder="Nazwa użytkownika"><br>
-            <input type="password" id="passwordName" placeholder="Hasło"><br><br>
-            <button onClick="addTask()">Wprowadź użytkownika do bazy</button>
-        </center>
+        </script>    
     </body>
 </html>

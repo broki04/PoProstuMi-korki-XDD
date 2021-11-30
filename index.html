@@ -2,46 +2,15 @@
 <html lang="pl">
     <head>
         <meta charset="UTF-8">
-        <title>Menadżer haseł</title>
-
-        <script>
-            let loginArray = new Map([
-                ['root', 'root'],
-                ['admin', 'admin']
-            ]);
-
-            function loginIn()
-            {
-                const login = form1.loginMemory;
-                const password = form1.passwordMemory;
-
-                console.log(`Login: ${login.value}`);
-                console.log(`Hasło: ${password.value}`);
-
-                if(!loginArray.has(login.value) || loginArray.get(login.value) != password.value) {
-                    alert("Wprowadzono nieprawidłowe hasło.");
-                } else {
-                    alert("Najlepsza strona to: http://pornhub.com (NNN JEST KURWA)");
-                    document.location.href = "panel.html";
-                }
-            }
-        </script>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Gra w snake</title>
     </head>
 
     <body>
-        <div id="panel">
-            <h2>Panel logowania:</h2>
+        <canvas class="canvas" height="500px" width="500px" style="background-color: aliceblue;"></canvas>
+        <h1 class="score"></h1>
 
-            <form id="form1" onSubmit="return false;">
-                <fieldset>
-                    <legend>Logowanie</legend>
-
-                    <input type="text" id="loginMemory" placeholder="Login">
-                    <input type="password" id="passwordMemory" placeholder="Hasło">
-
-                    <button id="submit-button" onClick="loginIn()">Zaloguj</button>
-                </fieldset>
-            </form>
-        </div>
+        <script type="text/javascript" src="snake.js"></script>
     </body>
 </html>

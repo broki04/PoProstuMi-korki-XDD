@@ -32,6 +32,7 @@ function snakeObject() {
         if(this[snakeCore[6]] < 0) this[snakeCore[6]] = canvas[snakeCore[5]]
         if(this[snakeCore[7]] < 0) this[snakeCore[7]] = canvas[snakeCore[4]]
     };
+
     this[snakeCore[18]] = function (id) {
         switch (id) {
             case snakeCore[19]:
@@ -52,6 +53,7 @@ function snakeObject() {
                 break
         }
     };
+
     this[snakeCore[23]] = function (snakeTarget) {
         if (this[snakeCore[6]] === snakeTarget[snakeCore[6]] && this[snakeCore[7]] === snakeTarget[snakeCore[7]]) {
             this[snakeCore[10]]++;
@@ -59,6 +61,7 @@ function snakeObject() {
         };
         return false
     };
+
     this[snakeCore[24]] = function () {
         for (var i = 0; i < this[snakeCore[11]][snakeCore[15]]; i++) {
             if (this[snakeCore[6]] === this[snakeCore[11]][i][snakeCore[6]] && this[snakeCore[7]] === this[snakeCore[11]][i][snakeCore[7]]) {
